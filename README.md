@@ -1,4 +1,4 @@
-# 🌍 Travel Agency Platform
+# Travel Agency Platform
 
 A full-stack travel booking and management platform built with **Spring Boot 3**, **React 19**, **MongoDB**, **RabbitMQ**, and **AWS**. The platform supports the complete journey from tour discovery and booking through document management, travel agent coordination, and automated reporting — all secured with JWT, OAuth2, rate limiting, and role-based access control.
 
