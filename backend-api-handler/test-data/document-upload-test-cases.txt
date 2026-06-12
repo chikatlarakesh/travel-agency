@@ -1,0 +1,543 @@
+================================================================================
+DOCUMENT UPLOAD API TEST CASES
+================================================================================
+
+*** API DESIGN ***
+POST   /api/v1/bookings/{id}/documents           → Create all docs (fails 409 if exists)
+PATCH  /api/v1/bookings/{id}/documents/{docId}   → Update single document
+DELETE /api/v1/bookings/{id}/documents/{docId}   → Delete single document
+GET    /api/v1/bookings/{id}/documents           → List all documents
+
+Authorization: Bearer <access_token>
+
+Booking has 2 travelers:
+  - John D (firstName: "john", lastName: "D")
+  - Don H (firstName: "don", lastName: "h")
+
+
+================================================================================
+
+
+================================================================================
+✅ CASE 1: VALID REQUEST (Should PASS - 200 OK)
+================================================================================
+{
+  "payments": [
+    {
+      "fileName": "payment_receipt.pdf",
+      "type": "application/pdf",
+      "base64encodedDocument": "JVBERi0xLjQKMSAwIG9iago8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFI+PmVuZG9iaiAyIDAgb2JqPDwvVHlwZS9QYWdlcy9LaWRzWzMgMCBSXS9Db3VudCAxPj5lbmRvYmogMyAwIG9iajw8L1R5cGUvUGFnZS9NZWRpYUJveFswIDAgNjEyIDc5Ml0+PmVuZG9iaiB4cmVmIDAgNCAwMDAwMDAwMDAwIDY1NTM1IGYgMDAwMDAwMDAwOSAwMDAwMCBuIDAwMDAwMDAwNTIgMDAwMDAgbiAwMDAwMDAwMTAyIDAwMDAwIG4gdHJhaWxlcjw8L1NpemUgNC9Sb290IDEgMCBSPj4gc3RhcnR4cmVmIDE1NCAlJUVPRg=="
+    }
+  ],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [
+        {
+          "fileName": "passport_john.pdf",
+          "type": "application/pdf",
+          "base64encodedDocument": "JVBERi0xLjQKMSAwIG9iago8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFI+PmVuZG9iaiAyIDAgb2JqPDwvVHlwZS9QYWdlcy9LaWRzWzMgMCBSXS9Db3VudCAxPj5lbmRvYmogMyAwIG9iajw8L1R5cGUvUGFnZS9NZWRpYUJveFswIDAgNjEyIDc5Ml0+PmVuZG9iaiB4cmVmIDAgNCAwMDAwMDAwMDAwIDY1NTM1IGYgMDAwMDAwMDAwOSAwMDAwMCBuIDAwMDAwMDAwNTIgMDAwMDAgbiAwMDAwMDAwMTAyIDAwMDAwIG4gdHJhaWxlcjw8L1NpemUgNC9Sb290IDEgMCBSPj4gc3RhcnR4cmVmIDE1NCAlJUVPRg=="
+        }
+      ]
+    },
+    {
+      "userName": "Don H",
+      "documents": [
+        {
+          "fileName": "passport_don.pdf",
+          "type": "application/pdf",
+          "base64encodedDocument": "JVBERi0xLjQKMSAwIG9iago8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFI+PmVuZG9iaiAyIDAgb2JqPDwvVHlwZS9QYWdlcy9LaWRzWzMgMCBSXS9Db3VudCAxPj5lbmRvYmogMyAwIG9iajw8L1R5cGUvUGFnZS9NZWRpYUJveFswIDAgNjEyIDc5Ml0+PmVuZG9iaiB4cmVmIDAgNCAwMDAwMDAwMDAwIDY1NTM1IGYgMDAwMDAwMDAwOSAwMDAwMCBuIDAwMDAwMDAwNTIgMDAwMDAgbiAwMDAwMDAwMTAyIDAwMDAwIG4gdHJhaWxlcjw8L1NpemUgNC9Sb290IDEgMCBSPj4gc3RhcnR4cmVmIDE1NCAlJUVPRg=="
+        }
+      ]
+    }
+  ]
+}
+
+EXPECTED: 200 OK
+
+
+================================================================================
+❌ CASE 2: MISSING PAYMENT RECEIPT (Should FAIL - 400)
+================================================================================
+{
+  "payments": [],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [{"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    },
+    {
+      "userName": "Don H",
+      "documents": [{"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "At least one payment receipt is required"
+
+
+================================================================================
+❌ CASE 3: NULL PAYMENTS ARRAY (Should FAIL - 400)
+================================================================================
+{
+  "payments": null,
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [{"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    },
+    {
+      "userName": "Don H",
+      "documents": [{"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "At least one payment receipt is required"
+
+
+================================================================================
+❌ CASE 4: MISSING ONE TRAVELER'S PASSPORT (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [{"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Expected passport documents for 2 travelers, but received for 1"
+
+
+================================================================================
+❌ CASE 5: WRONG GUEST NAME (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [{"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    },
+    {
+      "userName": "Mike Smith",
+      "documents": [{"fileName": "passport_mike.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Guest name 'mike smith' does not match any traveler in the booking"
+
+
+================================================================================
+❌ CASE 6: EMPTY GUEST DOCUMENTS ARRAY (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": []
+    },
+    {
+      "userName": "Don H",
+      "documents": [{"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "At least one passport document is required for guest: John D"
+
+
+================================================================================
+❌ CASE 7: MISSING PAYMENT FILENAME (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [{"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    },
+    {
+      "userName": "Don H",
+      "documents": [{"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Payment document fileName is required"
+
+
+================================================================================
+❌ CASE 8: MISSING PAYMENT CONTENT (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": ""}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [{"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    },
+    {
+      "userName": "Don H",
+      "documents": [{"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Payment document content is required"
+
+
+================================================================================
+❌ CASE 9: MISSING GUEST DOCUMENT CONTENT (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [{"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": ""}]
+    },
+    {
+      "userName": "Don H",
+      "documents": [{"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Document content is required for guest: John D"
+
+
+================================================================================
+❌ CASE 10: MISSING GUEST DOCUMENT FILENAME (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [{"fileName": "", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    },
+    {
+      "userName": "Don H",
+      "documents": [{"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Document fileName is required for guest: John D"
+
+
+================================================================================
+❌ CASE 11: NO GUEST DOCUMENTS AT ALL (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": null
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Passport documents required for all 2 travelers"
+
+
+================================================================================
+❌ CASE 12: EMPTY GUEST DOCUMENTS LIST (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": []
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Passport documents required for all 2 travelers"
+
+
+================================================================================
+❌ CASE 13: MISSING USERNAME FOR GUEST (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "",
+      "documents": [{"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    },
+    {
+      "userName": "Don H",
+      "documents": [{"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Guest userName is required for each guest document entry"
+
+
+================================================================================
+❌ CASE 14: TOO MANY TRAVELERS (Should FAIL - 400)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [{"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    },
+    {
+      "userName": "Don H",
+      "documents": [{"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    },
+    {
+      "userName": "Extra Person",
+      "documents": [{"fileName": "passport_extra.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Expected passport documents for 2 travelers, but received for 3"
+
+
+================================================================================
+✅ CASE 15: CASE-INSENSITIVE NAMES (Should PASS - 200 OK)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "JOHN D",
+      "documents": [{"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    },
+    {
+      "userName": "don h",
+      "documents": [{"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}]
+    }
+  ]
+}
+
+EXPECTED: 200 OK (names are compared case-insensitively)
+
+
+================================================================================
+✅ CASE 16: MULTIPLE DOCUMENTS PER GUEST (Should PASS - 200 OK)
+================================================================================
+{
+  "payments": [
+    {"fileName": "receipt1.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"},
+    {"fileName": "receipt2.pdf", "type": "application/pdf", "base64encodedDocument": "def456"}
+  ],
+  "guestDocuments": [
+    {
+      "userName": "John D",
+      "documents": [
+        {"fileName": "passport_john.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"},
+        {"fileName": "visa_john.pdf", "type": "application/pdf", "base64encodedDocument": "def456"}
+      ]
+    },
+    {
+      "userName": "Don H",
+      "documents": [
+        {"fileName": "passport_don.pdf", "type": "application/pdf", "base64encodedDocument": "abc123"}
+      ]
+    }
+  ]
+}
+
+EXPECTED: 200 OK (multiple documents allowed per guest and multiple payment receipts allowed)
+
+
+================================================================================
+❌ CASE 17: UNAUTHORIZED - NO TOKEN (Should FAIL - 401)
+================================================================================
+Request without Authorization header
+
+EXPECTED: 401 Unauthorized
+ERROR MESSAGE: "Valid authentication token required"
+
+
+================================================================================
+❌ CASE 18: UNAUTHORIZED - INVALID TOKEN (Should FAIL - 401)
+================================================================================
+Authorization: Bearer invalid_token_here
+
+EXPECTED: 401 Unauthorized
+ERROR MESSAGE: "Valid authentication token required"
+
+
+================================================================================
+❌ CASE 19: BOOKING NOT FOUND (Should FAIL - 404)
+================================================================================
+Using a non-existent bookingId in URL: /api/v1/bookings/non-existent-id/documents
+
+EXPECTED: 404 Not Found
+ERROR MESSAGE: "Booking not found"
+
+
+================================================================================
+❌ CASE 20: NOT YOUR BOOKING (Should FAIL - 401)
+================================================================================
+Using a valid bookingId but with a different user's token
+
+EXPECTED: 401 Unauthorized
+ERROR MESSAGE: "You are not authorized to access documents for this booking"
+
+
+================================================================================
+HTTP STATUS CODES SUMMARY
+================================================================================
+201 Created         - Documents uploaded successfully (POST)
+200 OK              - Document updated/deleted/retrieved successfully
+400 Bad Request     - Validation errors (missing fields, wrong data)
+401 Unauthorized    - Invalid/missing token or not booking owner
+404 Not Found       - Booking or document doesn't exist
+409 Conflict        - Documents already exist (use PATCH to update)
+
+================================================================================
+
+
+================================================================================
+❌ CASE 21: DOCUMENTS ALREADY EXIST (Should FAIL - 409)
+================================================================================
+Calling POST when documents already exist for the booking
+
+EXPECTED: 409 Conflict
+ERROR MESSAGE: "Documents already exist for booking {id}. Use PATCH to update individual documents."
+
+
+================================================================================
+                        PATCH ENDPOINT TEST CASES
+================================================================================
+
+================================================================================
+✅ CASE 22: UPDATE SINGLE DOCUMENT (Should PASS - 200 OK)
+================================================================================
+PATCH /api/v1/bookings/{bookingId}/documents/{documentId}
+
+{
+  "fileName": "passport_john_updated.pdf",
+  "type": "application/pdf",
+  "base64encodedDocument": "JVBERi0xLjQKMSAwIG9iago8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFI+PmVuZG9iag=="
+}
+
+EXPECTED: 200 OK
+MESSAGE: "Document updated successfully."
+
+
+================================================================================
+❌ CASE 23: UPDATE WITH MISSING FILE NAME (Should FAIL - 400)
+================================================================================
+PATCH /api/v1/bookings/{bookingId}/documents/{documentId}
+
+{
+  "fileName": "",
+  "type": "application/pdf",
+  "base64encodedDocument": "abc123"
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Document fileName is required"
+
+
+================================================================================
+❌ CASE 24: UPDATE WITH MISSING CONTENT (Should FAIL - 400)
+================================================================================
+PATCH /api/v1/bookings/{bookingId}/documents/{documentId}
+
+{
+  "fileName": "passport.pdf",
+  "type": "application/pdf",
+  "base64encodedDocument": ""
+}
+
+EXPECTED: 400 Bad Request
+ERROR MESSAGE: "Document content is required"
+
+
+================================================================================
+❌ CASE 25: UPDATE NON-EXISTENT DOCUMENT (Should FAIL - 404)
+================================================================================
+PATCH /api/v1/bookings/{bookingId}/documents/non-existent-doc-id
+
+{
+  "fileName": "passport.pdf",
+  "type": "application/pdf",
+  "base64encodedDocument": "abc123"
+}
+
+EXPECTED: 404 Not Found
+ERROR MESSAGE: "Document not found"
+
+
+================================================================================
+                           USER FLOW SUMMARY
+================================================================================
+
+1. INITIAL UPLOAD (POST):
+   - User has no documents uploaded
+   - UI shows "Upload Documents" button
+   - POST /api/v1/bookings/{id}/documents
+   - Must include: 1+ payment receipts + passports for ALL travelers
+   - Returns 201 Created
+
+2. VIEW DOCUMENTS (GET):
+   - User has documents uploaded
+   - UI shows "View" button
+   - GET /api/v1/bookings/{id}/documents
+   - Returns list of all documents
+
+3. EDIT SINGLE DOCUMENT (PATCH):
+   - User wants to fix one wrong document
+   - UI shows "Edit" button next to each document
+   - PATCH /api/v1/bookings/{id}/documents/{documentId}
+   - Updates only that specific document
+   - Returns 200 OK
+
+4. DELETE SINGLE DOCUMENT (DELETE):
+   - User wants to remove a document
+   - DELETE /api/v1/bookings/{id}/documents/{documentId}
+   - Returns 200 OK
+
+5. RE-UPLOAD ALL (POST after DELETE ALL):
+   - If user deletes ALL documents
+   - UI shows "Upload Documents" button again
+   - POST becomes available again
+
+================================================================================
+

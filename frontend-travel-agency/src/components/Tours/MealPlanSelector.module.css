@@ -1,0 +1,202 @@
+/* MealPlanSelector Component Styles */
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+/* Trigger Button */
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 56px;
+  padding: 16px 12px;
+  background: white;
+  border: 1px solid #d3e1ed;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  font-size: 14px;
+  color: #0B3857;
+}
+
+.trigger:hover {
+  border-color: #0088cc;
+}
+
+.leftIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: #0B3857;
+}
+
+.triggerContent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  flex: 1;
+  color: #0B3857;
+}
+
+.triggerContent svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.triggerText {
+  color: #0B3857;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: left;
+}
+
+.chevronDown,
+.chevronUp {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: #677883;
+  transition: transform 0.2s;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Panel */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #D3E1ED;
+  border-radius: 8px;
+  box-shadow: 0px 2px 10px 6px rgba(2, 126, 172, 0.2);
+  z-index: 100;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Options List */
+.optionsList {
+  padding: 0;
+}
+
+/* FilterBar-like option rows */
+.optionRow {
+  display: flex;
+  width: 100%;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  cursor: pointer;
+  background: #ffffff;
+  transition: background 0.2s;
+}
+
+.optionRow:hover {
+  background: #edf4fa;
+}
+
+.optionRowSelected {
+  background: #edf4fa;
+}
+
+.optionInput {
+  position: absolute;
+  opacity: 0;
+}
+
+.optionMark {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #027eac;
+  border-radius: 4px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.optionMarkChecked {
+  background: #027eac;
+}
+
+.optionCheckIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.optionText {
+  min-height: 24px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #0B3857;
+  flex: 1;
+}
+
+/* Footer with Clear all + Update buttons side by side */
+.footer {
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid #f0f0f0;
+  padding: 12px;
+}
+
+.clearButton {
+  flex: 1;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.clearButton:hover {
+  border-color: #0088cc;
+  color: #0088cc;
+  background: #f5f5f5;
+}
+
+.updateButton {
+  flex: 1;
+  padding: 8px 12px;
+  background: #0088cc;
+  border: 1px solid #0088cc;
+  border-radius: 6px;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.updateButton:hover {
+  background: #0077b6;
+  border-color: #0077b6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dropdown {
+    left: -20px;
+    right: -20px;
+  }
+}
+

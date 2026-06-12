@@ -1,0 +1,27 @@
+{
+  "tourId": "t-003",
+  "userId": "REPLACE_WITH_YOUR_USER_ID",
+  "tourInstanceId": "ti-003-jul15",
+  "mealPlan": "AI",
+  "adults": 2,
+  "children": 0,
+  "leadTraveler": {
+    "firstName": "Sarah",
+    "lastName": "Johnson",
+    "email": "sarah.j@example.com",
+    "phone": "+1-555-2222",
+    "dateOfBirth": "1988-03-22",
+    "passportNumber": "P99887766"
+  },
+  "additionalTravelers": [
+    {
+      "firstName": "Mike",
+      "lastName": "Johnson",
+      "email": "mike.j@example.com",
+      "phone": "+1-555-3333",
+      "dateOfBirth": "1986-11-10",
+      "passportNumber": "P66554433"
+    }
+  ]
+}
+

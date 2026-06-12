@@ -1,0 +1,164 @@
+/* TouristCounter Component Styles */
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+/* Trigger Button */
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 56px;
+  padding: 16px 12px;
+  background: white;
+  border: 1px solid #d3e1ed;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  font-size: 14px;
+  color: #0B3857;
+}
+
+.trigger:hover {
+  border-color: #0088cc;
+}
+
+.leftIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: #0B3857;
+}
+
+.triggerContent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  flex: 1;
+  color: #0B3857;
+}
+
+.triggerContent svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.triggerText {
+  color: #0B3857;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: left;
+}
+
+.chevronDown,
+.chevronUp {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: #677883;
+  transition: transform 0.2s;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Panel */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #D3E1ED;
+  border-radius: 8px;
+  box-shadow: 0px 8px 20px rgba(11, 56, 87, 0.12);
+  padding: 16px;
+  z-index: 100;
+}
+
+/* Counter Row */
+.counterRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+.counterRow:not(:last-child) {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.counterLabel {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a2e;
+}
+
+/* Counter Controls */
+.counterControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.counterButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 2px solid #0088cc;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #0088cc;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.counterButton:hover:not(:disabled) {
+  background: #0088cc;
+  color: white;
+}
+
+.counterButton:disabled {
+  border-color: #e0e0e0;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.counterValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a2e;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Max Info Message */
+.maxInfo {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: #fff3e0;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #f57c00;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dropdown {
+    left: -20px;
+    right: -20px;
+  }
+}
+

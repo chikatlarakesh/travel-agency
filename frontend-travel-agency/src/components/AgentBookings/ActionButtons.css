@@ -1,0 +1,126 @@
+/* ========================================
+   Action Buttons
+   ======================================== */
+
+.action-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.action-buttons__btn {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  height: 40px;
+  border-radius: 8px;
+  font-family: var(--font-family-primary, 'Nunito', sans-serif);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.action-buttons__btn--outline {
+  background: #FFFFFF;
+  border: 2px solid var(--color-blue-05, #027EAC);
+  color: var(--color-blue-05, #027EAC);
+}
+
+.action-buttons__btn--outline:hover {
+  background: var(--color-blue-light, #E7F9FF);
+  box-shadow: 0 1px 3px rgba(2, 126, 172, 0.15);
+}
+
+.action-buttons__btn--outline:focus-visible {
+  outline: 2px solid var(--color-blue-05, #027EAC);
+  outline-offset: 2px;
+}
+
+.action-buttons__btn--primary {
+  background: var(--color-blue-05, #027EAC);
+  border: 2px solid var(--color-blue-05, #027EAC);
+  color: #FFFFFF;
+}
+
+.action-buttons__btn--primary:hover {
+  background: var(--color-blue-05-hover, #026a94);
+  border-color: var(--color-blue-05-hover, #026a94);
+  box-shadow: 0 1px 3px rgba(2, 126, 172, 0.2);
+}
+
+.action-buttons__btn--primary:focus-visible {
+  outline: 2px solid var(--color-blue-05, #027EAC);
+  outline-offset: 2px;
+}
+
+/* ── Disabled confirm (pending approval) ── */
+.action-buttons__btn--disabled {
+  background: #B0C9D6;
+  border-color: #B0C9D6;
+  color: #FFFFFF;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.action-buttons__confirm-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.action-buttons__tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 0;
+  width: 220px;
+  background: #0B3857;
+  color: #FFFFFF;
+  font-family: var(--font-family-primary, 'Nunito', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-align: center;
+  white-space: normal;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.action-buttons__tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 24px;
+  border: 5px solid transparent;
+  border-top-color: #0B3857;
+}
+
+.action-buttons__confirm-wrapper:hover .action-buttons__tooltip {
+  display: block;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .action-buttons {
+    flex-wrap: wrap;
+    justify-content: stretch;
+  }
+
+  .action-buttons__btn {
+    flex: 1;
+    min-width: 0;
+  }
+}
+

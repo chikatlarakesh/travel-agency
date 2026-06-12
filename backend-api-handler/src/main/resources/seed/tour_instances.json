@@ -1,0 +1,333 @@
+[
+  {
+    "id": "ti-001",
+    "tourId": "t-001",
+    "startDate": "2026-06-01",
+    "endDate": "2026-06-13",
+    "totalCapacity": 20,
+    "availableSlots": 20,
+    "durations": [7, 10, 12],
+    "mealPlans": ["BB", "HB", "FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 1400.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } },
+      { "duration": 10, "pricePerPerson": 1900.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } },
+      { "duration": 12, "pricePerPerson": 2200.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } }
+    ],
+    "freeCancellationDays": 10
+  },
+  {
+    "id": "ti-002",
+    "tourId": "t-001",
+    "startDate": "2026-07-06",
+    "endDate": "2026-07-18",
+    "totalCapacity": 20,
+    "availableSlots": 20,
+    "durations": [7, 10, 12],
+    "mealPlans": ["BB", "HB", "FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 1400.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } },
+      { "duration": 10, "pricePerPerson": 1900.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } },
+      { "duration": 12, "pricePerPerson": 2200.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } }
+    ],
+    "freeCancellationDays": 10
+  },
+  {
+    "id": "ti-003",
+    "tourId": "t-001",
+    "startDate": "2026-08-03",
+    "endDate": "2026-08-15",
+    "totalCapacity": 20,
+    "availableSlots": 20,
+    "durations": [7, 10, 12],
+    "mealPlans": ["BB", "HB", "FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 1400.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } },
+      { "duration": 10, "pricePerPerson": 1900.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } },
+      { "duration": 12, "pricePerPerson": 2200.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } }
+    ],
+    "freeCancellationDays": 10
+  },
+  {
+    "id": "ti-004",
+    "tourId": "t-001",
+    "startDate": "2026-09-07",
+    "endDate": "2026-09-19",
+    "totalCapacity": 20,
+    "availableSlots": 20,
+    "durations": [7, 10, 12],
+    "mealPlans": ["BB", "HB", "FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 1400.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } },
+      { "duration": 10, "pricePerPerson": 1900.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } },
+      { "duration": 12, "pricePerPerson": 2200.00, "mealSupplementsPerDay": { "HB": 30.00, "FB": 50.00, "AI": 80.00 } }
+    ],
+    "freeCancellationDays": 10
+  },
+  {
+    "id": "ti-005",
+    "tourId": "t-002",
+    "startDate": "2026-06-15",
+    "endDate": "2026-06-22",
+    "totalCapacity": 8,
+    "availableSlots": 8,
+    "durations": [7],
+    "mealPlans": ["BB", "HB", "FB"],
+    "pricing": [
+      { "duration": 7, "pricePerPerson": 1400.00, "mealSupplementsPerDay": { "HB": 25.00, "FB": 40.00 } }
+    ],
+    "freeCancellationDays": 10
+  },
+  {
+    "id": "ti-006",
+    "tourId": "t-002",
+    "startDate": "2026-07-13",
+    "endDate": "2026-07-20",
+    "totalCapacity": 8,
+    "availableSlots": 8,
+    "durations": [7],
+    "mealPlans": ["BB", "HB", "FB"],
+    "pricing": [
+      { "duration": 7, "pricePerPerson": 1400.00, "mealSupplementsPerDay": { "HB": 25.00, "FB": 40.00 } }
+    ],
+    "freeCancellationDays": 10
+  },
+  {
+    "id": "ti-007",
+    "tourId": "t-002",
+    "startDate": "2026-08-10",
+    "endDate": "2026-08-17",
+    "totalCapacity": 8,
+    "availableSlots": 8,
+    "durations": [7],
+    "mealPlans": ["BB", "HB", "FB"],
+    "pricing": [
+      { "duration": 7, "pricePerPerson": 1400.00, "mealSupplementsPerDay": { "HB": 25.00, "FB": 40.00 } }
+    ],
+    "freeCancellationDays": 10
+  },
+  {
+    "id": "ti-008",
+    "tourId": "t-003",
+    "startDate": "2026-06-07",
+    "endDate": "2026-06-17",
+    "totalCapacity": 50,
+    "availableSlots": 50,
+    "durations": [7, 10],
+    "mealPlans": ["FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 2100.00, "mealSupplementsPerDay": { "AI": 45.00 } },
+      { "duration": 10, "pricePerPerson": 2900.00, "mealSupplementsPerDay": { "AI": 45.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-009",
+    "tourId": "t-003",
+    "startDate": "2026-07-05",
+    "endDate": "2026-07-15",
+    "totalCapacity": 50,
+    "availableSlots": 50,
+    "durations": [7, 10],
+    "mealPlans": ["FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 2100.00, "mealSupplementsPerDay": { "AI": 45.00 } },
+      { "duration": 10, "pricePerPerson": 2900.00, "mealSupplementsPerDay": { "AI": 45.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-010",
+    "tourId": "t-003",
+    "startDate": "2026-08-02",
+    "endDate": "2026-08-12",
+    "totalCapacity": 50,
+    "availableSlots": 50,
+    "durations": [7, 10],
+    "mealPlans": ["FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 2100.00, "mealSupplementsPerDay": { "AI": 45.00 } },
+      { "duration": 10, "pricePerPerson": 2900.00, "mealSupplementsPerDay": { "AI": 45.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-011",
+    "tourId": "t-003",
+    "startDate": "2026-09-13",
+    "endDate": "2026-09-23",
+    "totalCapacity": 50,
+    "availableSlots": 50,
+    "durations": [7, 10],
+    "mealPlans": ["FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 2100.00, "mealSupplementsPerDay": { "AI": 45.00 } },
+      { "duration": 10, "pricePerPerson": 2900.00, "mealSupplementsPerDay": { "AI": 45.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-012",
+    "tourId": "t-004",
+    "startDate": "2026-06-14",
+    "endDate": "2026-06-24",
+    "totalCapacity": 15,
+    "availableSlots": 15,
+    "durations": [7, 10],
+    "mealPlans": ["BB", "HB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 980.00,  "mealSupplementsPerDay": { "HB": 20.00, "AI": 60.00 } },
+      { "duration": 10, "pricePerPerson": 1350.00, "mealSupplementsPerDay": { "HB": 20.00, "AI": 60.00 } }
+    ],
+    "freeCancellationDays": 7
+  },
+  {
+    "id": "ti-013",
+    "tourId": "t-004",
+    "startDate": "2026-07-12",
+    "endDate": "2026-07-22",
+    "totalCapacity": 15,
+    "availableSlots": 15,
+    "durations": [7, 10],
+    "mealPlans": ["BB", "HB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 980.00,  "mealSupplementsPerDay": { "HB": 20.00, "AI": 60.00 } },
+      { "duration": 10, "pricePerPerson": 1350.00, "mealSupplementsPerDay": { "HB": 20.00, "AI": 60.00 } }
+    ],
+    "freeCancellationDays": 7
+  },
+  {
+    "id": "ti-014",
+    "tourId": "t-004",
+    "startDate": "2026-08-09",
+    "endDate": "2026-08-19",
+    "totalCapacity": 15,
+    "availableSlots": 15,
+    "durations": [7, 10],
+    "mealPlans": ["BB", "HB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 980.00,  "mealSupplementsPerDay": { "HB": 20.00, "AI": 60.00 } },
+      { "duration": 10, "pricePerPerson": 1350.00, "mealSupplementsPerDay": { "HB": 20.00, "AI": 60.00 } }
+    ],
+    "freeCancellationDays": 7
+  },
+  {
+    "id": "ti-015",
+    "tourId": "t-005",
+    "startDate": "2026-06-12",
+    "endDate": "2026-06-19",
+    "totalCapacity": 12,
+    "availableSlots": 12,
+    "durations": [5, 7],
+    "mealPlans": ["BB", "HB"],
+    "pricing": [
+      { "duration": 5, "pricePerPerson": 1100.00, "mealSupplementsPerDay": { "HB": 20.00 } },
+      { "duration": 7, "pricePerPerson": 1500.00, "mealSupplementsPerDay": { "HB": 20.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-016",
+    "tourId": "t-005",
+    "startDate": "2026-07-10",
+    "endDate": "2026-07-17",
+    "totalCapacity": 12,
+    "availableSlots": 12,
+    "durations": [5, 7],
+    "mealPlans": ["BB", "HB"],
+    "pricing": [
+      { "duration": 5, "pricePerPerson": 1100.00, "mealSupplementsPerDay": { "HB": 20.00 } },
+      { "duration": 7, "pricePerPerson": 1500.00, "mealSupplementsPerDay": { "HB": 20.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-017",
+    "tourId": "t-005",
+    "startDate": "2026-08-07",
+    "endDate": "2026-08-14",
+    "totalCapacity": 12,
+    "availableSlots": 12,
+    "durations": [5, 7],
+    "mealPlans": ["BB", "HB"],
+    "pricing": [
+      { "duration": 5, "pricePerPerson": 1100.00, "mealSupplementsPerDay": { "HB": 20.00 } },
+      { "duration": 7, "pricePerPerson": 1500.00, "mealSupplementsPerDay": { "HB": 20.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-018",
+    "tourId": "t-005",
+    "startDate": "2026-09-04",
+    "endDate": "2026-09-11",
+    "totalCapacity": 12,
+    "availableSlots": 12,
+    "durations": [5, 7],
+    "mealPlans": ["BB", "HB"],
+    "pricing": [
+      { "duration": 5, "pricePerPerson": 1100.00, "mealSupplementsPerDay": { "HB": 20.00 } },
+      { "duration": 7, "pricePerPerson": 1500.00, "mealSupplementsPerDay": { "HB": 20.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-019",
+    "tourId": "t-006",
+    "startDate": "2026-06-21",
+    "endDate": "2026-07-05",
+    "totalCapacity": 40,
+    "availableSlots": 40,
+    "durations": [7, 14],
+    "mealPlans": ["HB", "FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 1800.00, "mealSupplementsPerDay": { "FB": 35.00, "AI": 70.00 } },
+      { "duration": 14, "pricePerPerson": 3400.00, "mealSupplementsPerDay": { "FB": 35.00, "AI": 70.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-020",
+    "tourId": "t-006",
+    "startDate": "2026-07-19",
+    "endDate": "2026-08-02",
+    "totalCapacity": 40,
+    "availableSlots": 40,
+    "durations": [7, 14],
+    "mealPlans": ["HB", "FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 1800.00, "mealSupplementsPerDay": { "FB": 35.00, "AI": 70.00 } },
+      { "duration": 14, "pricePerPerson": 3400.00, "mealSupplementsPerDay": { "FB": 35.00, "AI": 70.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-021",
+    "tourId": "t-006",
+    "startDate": "2026-08-16",
+    "endDate": "2026-08-30",
+    "totalCapacity": 40,
+    "availableSlots": 40,
+    "durations": [7, 14],
+    "mealPlans": ["HB", "FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 1800.00, "mealSupplementsPerDay": { "FB": 35.00, "AI": 70.00 } },
+      { "duration": 14, "pricePerPerson": 3400.00, "mealSupplementsPerDay": { "FB": 35.00, "AI": 70.00 } }
+    ],
+    "freeCancellationDays": 14
+  },
+  {
+    "id": "ti-022",
+    "tourId": "t-006",
+    "startDate": "2026-09-20",
+    "endDate": "2026-10-04",
+    "totalCapacity": 40,
+    "availableSlots": 40,
+    "durations": [7, 14],
+    "mealPlans": ["HB", "FB", "AI"],
+    "pricing": [
+      { "duration": 7,  "pricePerPerson": 1800.00, "mealSupplementsPerDay": { "FB": 35.00, "AI": 70.00 } },
+      { "duration": 14, "pricePerPerson": 3400.00, "mealSupplementsPerDay": { "FB": 35.00, "AI": 70.00 } }
+    ],
+    "freeCancellationDays": 14
+  }
+]

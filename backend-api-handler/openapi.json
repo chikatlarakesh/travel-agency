@@ -1,0 +1,2320 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Travel Agency API",
+    "description": "Sprint 2 — Auth, Tours, Bookings, and Tour Booking Lifecycle Management. Includes JWT-based authentication, tour browsing, booking lifecycle (BOOKED → CONFIRMED → STARTED → FINISHED / CANCELED), document upload & verification, and travel-agent dedicated endpoints.",
+    "contact": {
+      "name": "Travel Agency Team",
+      "email": "support@travelagency.com"
+    },
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Current server"
+    }
+  ],
+  "security": [
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Tours",
+      "description": "Destination search, tour listing, details and reviews"
+    },
+    {
+      "name": "Tours",
+      "description": "Tour browsing and search"
+    },
+    {
+      "name": "Bookings",
+      "description": "Tour booking lifecycle management"
+    },
+    {
+      "name": "Travel Agent",
+      "description": "Endpoints for travel agents to manage their assigned bookings"
+    },
+    {
+      "name": "Authentication",
+      "description": "User authentication and session management"
+    },
+    {
+      "name": "Auth",
+      "description": "Sign-up, sign-in, token refresh and logout"
+    },
+    {
+      "name": "Bookings",
+      "description": "Tour booking lifecycle: create, confirm, cancel, upload/verify documents, record customer approval"
+    },
+    {
+      "name": "Travel Agent",
+      "description": "Travel-agent portal: list and manage assigned bookings"
+    }
+  ],
+  "paths": {
+    "/api/v1/bookings/{bookingId}": {
+      "put": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Update a booking (Sprint 1)",
+        "description": "Updates booking details such as meal plan, traveler info and guest count",
+        "operationId": "updateBooking",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBookingRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid request data or booking state"
+          },
+          "404": {
+            "description": "Booking not found"
+          },
+          "204": {
+            "description": "Booking updated successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Cancel a booking (customer, Sprint 1)",
+        "description": "Allowed only if current date is at least 10 days before tour start date",
+        "operationId": "cancelBooking",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Booking cancelled successfully"
+          },
+          "400": {
+            "description": "Cancellation not allowed"
+          },
+          "404": {
+            "description": "Booking not found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/bookings": {
+      "get": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Get all bookings for a user",
+        "operationId": "getBookings",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "ID of the user whose bookings to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bookings retrieved successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookedTourListResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookedTourListResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Create a new booking",
+        "operationId": "createBooking",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBookingRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Booking created successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBookingResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBookingResponseDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tour not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBookingResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBookingResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/bookings/{bookingId}/documents": {
+      "post": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Upload a document to a booking",
+        "description": "Customer uploads a passport, visa, or payment receipt for the assigned travel agent to review",
+        "operationId": "uploadDocument",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadDocumentRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Document uploaded successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid state or missing fields",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/bookings/{bookingId}/confirm": {
+      "post": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Confirm booking with document check (travel agent, Sprint 2)",
+        "description": "Transitions BOOKED → CONFIRMED after verifying all uploaded documents",
+        "operationId": "confirmBookingV2",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmBookingRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Documents missing or unverified",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Booking confirmed",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Confirm a booking (Sprint 1 - simple)",
+        "description": "Transitions a booking from BOOKED to CONFIRMED state (no document check)",
+        "operationId": "confirmBooking",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Booking confirmed successfully"
+          },
+          "404": {
+            "description": "Booking not found"
+          },
+          "400": {
+            "description": "Booking is not in BOOKED state"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/auth/sign-up": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register a new user account",
+        "operationId": "signUp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Account created successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpResponseDTO"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/sign-in": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Sign in with email and password",
+        "operationId": "signIn",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInResponseDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Authentication successful",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Refresh access token using refresh token cookie",
+        "operationId": "refresh",
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tokens refreshed successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or expired refresh token",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout and invalidate refresh token",
+        "operationId": "logout",
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logged out successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bookings/{bookingId}/edit": {
+      "patch": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Edit booking details (travel agent action)",
+        "description": "Edits guests, meal plan, or duration — only allowed before confirmation and after customer approval",
+        "operationId": "editBooking",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditBookingRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Edit not allowed (post-confirmation or no approval)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Booking updated",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/bookings/{bookingId}/documents/verify": {
+      "patch": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Verify a document (travel agent action)",
+        "description": "Travel agent approves or rejects a specific document uploaded by the customer",
+        "operationId": "verifyDocument",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentVerificationRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Document verification recorded",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid action or document not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/bookings/{bookingId}/customer-approval": {
+      "patch": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Record customer approval for agent edit",
+        "description": "Records whether the customer approved or declined the travel agent's proposed changes (OFFLINE mode)",
+        "operationId": "recordCustomerApproval",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerApprovalRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Approval recorded",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid state or request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/travel-agent/bookings": {
+      "get": {
+        "tags": [
+          "Travel Agent"
+        ],
+        "summary": "List bookings assigned to the calling travel agent",
+        "description": "Returns all bookings where the JWT subject matches the booking's travelAgentId. Optionally filter by booking status (BOOKED, CONFIRMED, STARTED, FINISHED, CANCELED).",
+        "operationId": "getAgentBookings",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Optional booking status filter",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "BOOKED"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized — valid JWT required",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentBookingListResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status filter value",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentBookingListResponseDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Bookings retrieved successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentBookingListResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/travel-agent/bookings/{bookingId}": {
+      "get": {
+        "tags": [
+          "Travel Agent"
+        ],
+        "summary": "Get a single booking assigned to the calling travel agent",
+        "description": "Returns full booking detail including customer info, documents, and lifecycle metadata. Returns 401 if the calling agent is not the one assigned to this booking.",
+        "operationId": "getAgentBookingById",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Booking retrieved successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — not the assigned agent",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/tours/{id}": {
+      "get": {
+        "tags": [
+          "Tours"
+        ],
+        "summary": "Get tour details by ID",
+        "operationId": "getTourById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tour details",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TourDetailsDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tour not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TourDetailsDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tours/{id}/reviews": {
+      "get": {
+        "tags": [
+          "Tours"
+        ],
+        "summary": "Get reviews for a specific tour",
+        "operationId": "getReviews",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 4
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "RATING_DESC"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated reviews",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewListResponseDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tour not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewListResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tours/destinations": {
+      "get": {
+        "tags": [
+          "Tours"
+        ],
+        "summary": "Autocomplete destination names",
+        "operationId": "getDestinations",
+        "parameters": [
+          {
+            "name": "destination",
+            "in": "query",
+            "description": "Search query (minimum 3 characters)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Destinations matching query",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/DestinationListResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tours/available": {
+      "get": {
+        "tags": [
+          "Tours"
+        ],
+        "summary": "Get paginated list of available tours with filters",
+        "operationId": "getAvailableTours",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 6
+            }
+          },
+          {
+            "name": "destination",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Any destination"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "duration",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "adults",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "children",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "mealPlan",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tourType",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "RATING_DESC"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered tour list",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TourListResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bookings/{bookingId}/cancel": {
+      "delete": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Cancel booking with reason (travel agent, Sprint 2)",
+        "description": "Cancels a BOOKED or CONFIRMED booking with a structured reason and refund eligibility",
+        "operationId": "cancelBookingV2",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelBookingRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Booking cancelled",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid reason or booking cannot be cancelled",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GuestsDTO": {
+        "type": "object",
+        "properties": {
+          "adult": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "children": {
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PersonDetailDTO": {
+        "required": [
+          "firstName",
+          "lastName"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateBookingRequestDTO": {
+        "required": [
+          "guests",
+          "personalDetails"
+        ],
+        "type": "object",
+        "properties": {
+          "guests": {
+            "$ref": "#/components/schemas/GuestsDTO"
+          },
+          "personalDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonDetailDTO"
+            }
+          },
+          "mealPlan": {
+            "pattern": "^(BB|HB|FB|AI)$",
+            "type": "string"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "CreateBookingRequestDTO": {
+        "required": [
+          "date",
+          "duration",
+          "guests",
+          "mealPlan",
+          "personalDetails",
+          "tourId",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "tourId": {
+            "type": "string"
+          },
+          "date": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "mealPlan": {
+            "pattern": "^(BB|HB|FB|AI)$",
+            "type": "string"
+          },
+          "guests": {
+            "$ref": "#/components/schemas/GuestsDTO"
+          },
+          "personalDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonDetailDTO"
+            }
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "CreateBookingResponseDTO": {
+        "type": "object",
+        "properties": {
+          "freeCancelation": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      },
+      "UploadDocumentRequestDTO": {
+        "required": [
+          "fileUrl",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of document being uploaded",
+            "example": "PASSPORT",
+            "enum": [
+              "PASSPORT",
+              "VISA",
+              "PAYMENT_RECEIPT",
+              "GUEST_DOCUMENT",
+              "OTHER"
+            ]
+          },
+          "fileName": {
+            "type": "string",
+            "description": "Original file name",
+            "example": "Passport_JohnDoe.pdf"
+          },
+          "fileUrl": {
+            "type": "string",
+            "description": "URL or base64-encoded file content"
+          }
+        },
+        "description": "Request to upload a document to a booking"
+      },
+      "BookingDocumentDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "PASSPORT",
+              "VISA",
+              "PAYMENT_RECEIPT",
+              "GUEST_DOCUMENT",
+              "OTHER"
+            ]
+          },
+          "fileUrl": {
+            "type": "string"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "verifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "verifiedBy": {
+            "type": "string"
+          },
+          "uploadedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CancellationDTO": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "enum": [
+              "CUSTOMERS_EMERGENCY",
+              "WEATHER_CONDITIONS",
+              "OPERATIONAL_ISSUE",
+              "NATURAL_DISASTER",
+              "HEALTH_CONCERN",
+              "OTHER"
+            ]
+          },
+          "reasonNote": {
+            "type": "string"
+          },
+          "canceledBy": {
+            "type": "string"
+          },
+          "canceledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refundEligible": {
+            "type": "boolean"
+          }
+        },
+        "description": "Booking cancellation metadata"
+      },
+      "ConfirmationDTO": {
+        "type": "object",
+        "properties": {
+          "confirmedBy": {
+            "type": "string"
+          },
+          "confirmedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "description": "Booking confirmation metadata"
+      },
+      "CustomerApprovalDTO": {
+        "type": "object",
+        "properties": {
+          "approvalMode": {
+            "type": "string",
+            "enum": [
+              "OFFLINE"
+            ]
+          },
+          "approvalGiven": {
+            "type": "boolean"
+          },
+          "approvalDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "approvalNote": {
+            "type": "string"
+          }
+        },
+        "description": "Customer approval record for travel-agent proposed edits"
+      },
+      "CustomerDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "guestCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "description": "Customer contact info visible to assigned travel agent"
+      },
+      "TravelAgentBookingDetailDTO": {
+        "type": "object",
+        "properties": {
+          "bookingId": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "tourName": {
+            "type": "string"
+          },
+          "destination": {
+            "type": "string"
+          },
+          "tourImageUrl": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "mealPlan": {
+            "type": "string"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "customerDetails": {
+            "$ref": "#/components/schemas/CustomerDetailsDTO"
+          },
+          "guestDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonDetailDTO"
+            }
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookingDocumentDTO"
+            }
+          },
+          "documentCount": {
+            "type": "integer",
+            "description": "Number of documents uploaded",
+            "format": "int32"
+          },
+          "verifiedDocumentCount": {
+            "type": "integer",
+            "description": "Number of documents verified",
+            "format": "int32"
+          },
+          "confirmation": {
+            "$ref": "#/components/schemas/ConfirmationDTO"
+          },
+          "cancellation": {
+            "$ref": "#/components/schemas/CancellationDTO"
+          },
+          "customerApproval": {
+            "$ref": "#/components/schemas/CustomerApprovalDTO"
+          },
+          "freeCancellationDate": {
+            "type": "string"
+          }
+        },
+        "description": "Full booking detail returned to the assigned travel agent"
+      },
+      "ConfirmBookingRequestDTO": {
+        "type": "object",
+        "properties": {
+          "notes": {
+            "type": "string",
+            "description": "Optional notes from the travel agent",
+            "example": "All documents verified and approved."
+          }
+        },
+        "description": "Request to confirm a booking (travel agent action)"
+      },
+      "SignUpRequestDTO": {
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 16,
+            "minLength": 8,
+            "type": "string"
+          }
+        }
+      },
+      "SignUpResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "SignInRequestDTO": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 16,
+            "minLength": 8,
+            "type": "string"
+          }
+        }
+      },
+      "SignInResponseDTO": {
+        "type": "object",
+        "properties": {
+          "idToken": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "userName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "MessageResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "EditBookingRequestDTO": {
+        "type": "object",
+        "properties": {
+          "adults": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Updated number of adult guests",
+            "format": "int32"
+          },
+          "children": {
+            "minimum": 0,
+            "type": "integer",
+            "description": "Updated number of child guests",
+            "format": "int32"
+          },
+          "mealPlan": {
+            "type": "string",
+            "description": "Updated meal plan",
+            "example": "HB"
+          },
+          "duration": {
+            "minimum": 1,
+            "type": "integer",
+            "description": "Updated tour duration in days",
+            "format": "int32",
+            "example": 7
+          }
+        },
+        "description": "Request for a travel agent to edit a booking (requires prior customer approval)"
+      },
+      "DocumentVerificationRequestDTO": {
+        "required": [
+          "action",
+          "documentId"
+        ],
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "description": "ID of the document within the booking's documents list"
+          },
+          "action": {
+            "type": "string",
+            "description": "Verification action: APPROVE or REJECT",
+            "example": "APPROVE",
+            "enum": [
+              "APPROVE",
+              "REJECT"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "description": "Optional note explaining the verification decision"
+          }
+        },
+        "description": "Request to verify (or reject) a specific booking document"
+      },
+      "CustomerApprovalRequestDTO": {
+        "required": [
+          "approvalGiven",
+          "approvalMode"
+        ],
+        "type": "object",
+        "properties": {
+          "approvalMode": {
+            "type": "string",
+            "description": "How the approval was obtained",
+            "example": "OFFLINE",
+            "enum": [
+              "OFFLINE"
+            ]
+          },
+          "approvalGiven": {
+            "type": "boolean",
+            "description": "Whether the customer approved the changes",
+            "example": true
+          },
+          "approvalNote": {
+            "type": "string",
+            "description": "Optional customer note about the approval decision"
+          }
+        },
+        "description": "Customer approval for travel agent proposed booking changes"
+      },
+      "AgentBookingListResponseDTO": {
+        "type": "object",
+        "properties": {
+          "bookings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TravelAgentBookingDetailDTO"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "description": "List of bookings assigned to a travel agent"
+      },
+      "GuestQuantityDTO": {
+        "type": "object",
+        "properties": {
+          "adultsMaxValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "childrenMaxValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalMaxVelue": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "TourDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "destination": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number",
+            "format": "double"
+          },
+          "imageUrls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "summary": {
+            "type": "string"
+          },
+          "freeCancelationDaysBefore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "durations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "accomodiation": {
+            "type": "string"
+          },
+          "hotelName": {
+            "type": "string"
+          },
+          "hotelDescription": {
+            "type": "string"
+          },
+          "mealPlans": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "customDetails": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "startDates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "guestQuantity": {
+            "$ref": "#/components/schemas/GuestQuantityDTO"
+          },
+          "price": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "mealSupplementsPerDay": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ReviewDTO": {
+        "type": "object",
+        "properties": {
+          "authorName": {
+            "type": "string"
+          },
+          "authorImageUrl": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "rate": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reviewContent": {
+            "type": "string"
+          }
+        }
+      },
+      "ReviewListResponseDTO": {
+        "type": "object",
+        "properties": {
+          "reviews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReviewDTO"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "DestinationListResponseDTO": {
+        "type": "object",
+        "properties": {
+          "destinations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "TourListResponseDTO": {
+        "type": "object",
+        "properties": {
+          "tours": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TourSummaryDTO"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "TourSummaryDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "destination": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "durations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mealPlans": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "price": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number",
+            "format": "double"
+          },
+          "reviews": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "freeCancellation": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "BookedTourDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "tourImageUrl": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "destination": {
+            "type": "string"
+          },
+          "tourDetails": {
+            "$ref": "#/components/schemas/TourDetailsBookingDTO"
+          },
+          "travelAgent": {
+            "$ref": "#/components/schemas/TravelAgentDTO"
+          },
+          "canceledBy": {
+            "type": "string",
+            "deprecated": true
+          },
+          "cancelReason": {
+            "type": "string",
+            "deprecated": true
+          },
+          "personalDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonDetailDTO"
+            }
+          },
+          "travelerCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "childrenCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "freeCancellationDate": {
+            "type": "string"
+          },
+          "customerDetails": {
+            "$ref": "#/components/schemas/CustomerDetailsDTO"
+          },
+          "documents": {
+            "type": "array",
+            "description": "Documents uploaded by the customer",
+            "items": {
+              "$ref": "#/components/schemas/BookingDocumentDTO"
+            }
+          },
+          "confirmation": {
+            "$ref": "#/components/schemas/ConfirmationDTO"
+          },
+          "cancellationDetails": {
+            "$ref": "#/components/schemas/CancellationDTO"
+          },
+          "customerApproval": {
+            "$ref": "#/components/schemas/CustomerApprovalDTO"
+          }
+        },
+        "description": "Booked tour summary for customer and agent views"
+      },
+      "BookedTourListResponseDTO": {
+        "type": "object",
+        "properties": {
+          "bookings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookedTourDTO"
+            }
+          }
+        },
+        "description": "Paginated list of booked tours"
+      },
+      "TourDetailsBookingDTO": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "mealPlan": {
+            "type": "string"
+          },
+          "guests": {
+            "type": "string"
+          },
+          "totalPrice": {
+            "type": "string"
+          },
+          "documents": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelAgentDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "messenger": {
+            "type": "string"
+          }
+        }
+      },
+      "CancelBookingRequestDTO": {
+        "required": [
+          "reason"
+        ],
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "Structured cancellation reason",
+            "example": "CUSTOMERS_EMERGENCY",
+            "enum": [
+              "CUSTOMERS_EMERGENCY",
+              "WEATHER_CONDITIONS",
+              "OPERATIONAL_ISSUE",
+              "NATURAL_DISASTER",
+              "HEALTH_CONCERN",
+              "OTHER"
+            ]
+          },
+          "reasonNote": {
+            "type": "string",
+            "description": "Additional detail about the cancellation reason"
+          }
+        },
+        "description": "Request to cancel a booking (travel agent action)"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Paste your JWT access token here",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

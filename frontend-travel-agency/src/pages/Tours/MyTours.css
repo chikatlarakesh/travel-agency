@@ -1,0 +1,129 @@
+.my-tours-page {
+  position: relative;
+  min-height: 100vh;
+  overflow-y: auto;
+  background: #e7f9ff;
+}
+
+.my-tours-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  width: min(1360px, calc(100% - 32px));
+  margin: 40px auto;
+}
+
+.my-tours-tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 540px;
+  max-width: 100%;
+  height: 48px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.my-tours-tabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.my-tours-tab {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 16px;
+  height: 48px;
+  border: none;
+  border-bottom: 1px solid #a2aeb9;
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 24px;
+  color: #677883;
+  cursor: pointer;
+}
+
+.my-tours-tab.is-active {
+  color: #0b3857;
+}
+
+.my-tours-tab.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 5px;
+  border-radius: 6px;
+  background: #027eac;
+}
+
+.my-tours-cards {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 32px;
+  row-gap: 16px;
+}
+
+.my-tours-empty {
+  grid-column: 1 / -1;
+  display: flex;
+  min-height: 240px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #d3e1ed;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.my-tours-empty-title {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 24px;
+  color: #0b3857;
+}
+
+.my-tours-empty-subtitle {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  line-height: 20px;
+  color: #677883;
+}
+
+.my-tours-pagination {
+  margin: 0 auto;
+  display: flex;
+  height: 28px;
+  width: 112px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media (max-width: 1280px) {
+  .my-tours-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-tours-container {
+    width: calc(100% - 24px);
+    margin: 24px auto;
+  }
+}

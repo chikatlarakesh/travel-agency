@@ -1,0 +1,9 @@
+{
+  "email": "john.doe@example.com",
+  "password": "SecurePass123!",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phone": "+1-555-0123",
+  "role": "CUSTOMER"
+}
+

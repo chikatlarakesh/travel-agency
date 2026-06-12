@@ -1,0 +1,374 @@
+/* ── PAGE WRAPPER ── */
+.pageWrapper {
+  min-height: 100vh;
+  width: 100%;
+  background: #E7F9FF;
+  font-family: 'Nunito', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* ── CONTAINER ── */
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 1360px;
+  min-height: min(852px, calc(100vh - 48px));
+}
+
+/* ── LEFT PANEL – white card ── */
+.formCard {
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 10px 6px rgba(2, 126, 172, 0.2);
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(32px, 5vw, 80px) clamp(24px, 4vw, 60px);
+  box-sizing: border-box;
+}
+
+/* Inner form */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 496px;
+}
+
+/* ── TITLE SECTION ── */
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+}
+
+.blockTitle {
+  width: 100%;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 300;
+  font-size: clamp(12px, 1vw, 14px);
+  line-height: 24px;
+  text-transform: uppercase;
+  color: #0B3857;
+  margin: 0;
+}
+
+.heading {
+  width: 100%;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: clamp(20px, 2vw, 24px);
+  line-height: 40px;
+  color: #0B3857;
+  margin: 0;
+}
+
+/* ── INPUTS SECTION ── */
+.inputsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+}
+
+.labelRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 24px;
+}
+
+.label {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 24px;
+  color: #0B3857;
+}
+
+.inputHint {
+  display: block;
+  width: 100%;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #677883;
+}
+
+.forgotLink {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #027EAC;
+  text-decoration: underline;
+  text-align: left;
+  width: 100%;
+}
+
+.inputBox {
+  box-sizing: border-box;
+  padding: 16px;
+  width: 100%;
+  height: 56px;
+  background: #FFFFFF;
+  border: 1px solid #D3E1ED;
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #0B3857;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inputBox::placeholder {
+  color: #A2AEB9;
+}
+
+.inputBox:focus {
+  border-color: #027EAC;
+}
+
+.inputError {
+  border-color: #D97B7B !important;
+  background: #FFF8F8;
+}
+
+.inputErrorText {
+  display: block;
+  width: 100%;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #C0352A;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Password wrapper */
+.passwordWrapper {
+  position: relative;
+  width: 100%;
+  height: 56px;
+}
+
+.passwordWrapper .inputBox {
+  padding-right: 48px;
+}
+
+.eyeToggle {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: #A2AEB9;
+}
+
+/* ── ACTION SECTION ── */
+.actionSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.loginButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 4px;
+  width: 100%;
+  height: 40px;
+  background: #027EAC;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.loginButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loginButton:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.buttonText {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.signupLink {
+  width: 100%;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: left;
+  color: #0B3857;
+  margin: 0;
+}
+
+.signupBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #027EAC;
+  text-decoration: underline;
+  margin-left: 4px;
+}
+
+/* ── LOCKED BANNER ── */
+.lockedBanner {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #FCE9ED;
+  border-radius: 8px;
+  color: #C0352A;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 20px;
+  animation: fadeIn 0.25s ease;
+}
+
+/* ── RIGHT PANEL – travel image ── */
+.imagePanel {
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 664 / 852;
+  align-self: center;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 32px;
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ══════════════════════════════════════ */
+
+/* Tablet: two columns but smaller */
+@media (max-width: 1024px) {
+  .container {
+    gap: 20px;
+  }
+  .form {
+    gap: 28px;
+  }
+}
+
+/* Small tablet / large mobile: hide image, form centred */
+@media (max-width: 768px) {
+  .pageWrapper {
+    padding: 16px;
+    align-items: flex-start;
+    padding-top: 32px;
+  }
+  .container {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: unset;
+    gap: 0;
+  }
+  .imagePanel {
+    display: none;
+  }
+  .formCard {
+    border-radius: 24px;
+    padding: 40px 24px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .form {
+    gap: 24px;
+    max-width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .pageWrapper {
+    padding: 12px;
+    padding-top: 20px;
+  }
+  .formCard {
+    border-radius: 16px;
+    padding: 32px 20px;
+  }
+  .form {
+    gap: 20px;
+  }
+  .heading {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .inputBox {
+    height: 48px;
+    font-size: 14px;
+  }
+  .passwordWrapper {
+    height: 48px;
+  }
+}

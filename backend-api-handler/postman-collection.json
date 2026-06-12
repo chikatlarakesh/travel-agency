@@ -1,0 +1,329 @@
+{
+  "info": {
+    "name": "Travel Booking API",
+    "description": "Complete API collection for testing the Travel Booking System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Sign Up",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    pm.collectionVariables.set('userId', jsonData.userId);",
+                  "    pm.environment.set('token', jsonData.token);",
+                  "    pm.environment.set('userId', jsonData.userId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePass123!\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+1-555-0123\",\n  \"role\": \"CUSTOMER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/sign-up",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "auth", "sign-up"]
+            }
+          }
+        },
+        {
+          "name": "Sign In",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    pm.collectionVariables.set('userId', jsonData.userId);",
+                  "    pm.environment.set('token', jsonData.token);",
+                  "    pm.environment.set('userId', jsonData.userId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/sign-in",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "auth", "sign-in"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tours",
+      "item": [
+        {
+          "name": "Search Destinations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tours/destinations?destination=phu",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tours", "destinations"],
+              "query": [
+                {
+                  "key": "destination",
+                  "value": "phu"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Tours",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tours/available?page=1&pageSize=6",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tours", "available"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "6"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Tours - Filter by Resort",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tours/available?tourType=RESORT",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tours", "available"],
+              "query": [
+                {
+                  "key": "tourType",
+                  "value": "RESORT"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Tours - Filter by All Inclusive",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tours/available?mealPlan=AI",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tours", "available"],
+              "query": [
+                {
+                  "key": "mealPlan",
+                  "value": "AI"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Tours - Sort by Price",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tours/available?sortBy=PRICE_ASC",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tours", "available"],
+              "query": [
+                {
+                  "key": "sortBy",
+                  "value": "PRICE_ASC"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Tour by ID (Garden Resort)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tours/t-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tours", "t-001"]
+            }
+          }
+        },
+        {
+          "name": "Get Tour by ID (Caribbean Cruise)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tours/t-003",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tours", "t-003"]
+            }
+          }
+        },
+        {
+          "name": "Get Tour Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tours/t-001/reviews?page=1&pageSize=4",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "tours", "t-001", "reviews"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "4"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "Create Booking - Resort",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tourId\": \"t-001\",\n  \"userId\": \"{{userId}}\",\n  \"tourInstanceId\": \"ti-001-dec01\",\n  \"mealPlan\": \"AI\",\n  \"adults\": 2,\n  \"children\": 1,\n  \"leadTraveler\": {\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"phone\": \"+1-555-0123\",\n    \"dateOfBirth\": \"1985-06-15\",\n    \"passportNumber\": \"P12345678\"\n  },\n  \"additionalTravelers\": [\n    {\n      \"firstName\": \"Jane\",\n      \"lastName\": \"Doe\",\n      \"email\": \"jane.doe@example.com\",\n      \"phone\": \"+1-555-0124\",\n      \"dateOfBirth\": \"1987-08-20\",\n      \"passportNumber\": \"P87654321\"\n    },\n    {\n      \"firstName\": \"Jimmy\",\n      \"lastName\": \"Doe\",\n      \"email\": \"\",\n      \"phone\": \"\",\n      \"dateOfBirth\": \"2015-03-10\",\n      \"passportNumber\": \"P11223344\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "bookings"]
+            }
+          }
+        },
+        {
+          "name": "Create Booking - Cruise",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tourId\": \"t-003\",\n  \"userId\": \"{{userId}}\",\n  \"tourInstanceId\": \"ti-003-jul15\",\n  \"mealPlan\": \"AI\",\n  \"adults\": 2,\n  \"children\": 0,\n  \"leadTraveler\": {\n    \"firstName\": \"Sarah\",\n    \"lastName\": \"Johnson\",\n    \"email\": \"sarah.j@example.com\",\n    \"phone\": \"+1-555-2222\",\n    \"dateOfBirth\": \"1988-03-22\",\n    \"passportNumber\": \"P99887766\"\n  },\n  \"additionalTravelers\": [\n    {\n      \"firstName\": \"Mike\",\n      \"lastName\": \"Johnson\",\n      \"email\": \"mike.j@example.com\",\n      \"phone\": \"+1-555-3333\",\n      \"dateOfBirth\": \"1986-11-10\",\n      \"passportNumber\": \"P66554433\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "bookings"]
+            }
+          }
+        },
+        {
+          "name": "Get User Bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/bookings?userId={{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "bookings"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{userId}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+

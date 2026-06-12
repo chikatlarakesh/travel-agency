@@ -1,0 +1,185 @@
+[
+  {
+    "id": "t-001",
+    "name": "Garden Resort & Spa - Premium Escape",
+    "destination": "Punta Cana, Dominican Republic",
+    "tourType": "RESORT",
+    "rating": 5.0,
+    "reviewCount": 19,
+    "imageUrls": [
+      "https://example.com/tours/garden-resort/1.jpg",
+      "https://example.com/tours/garden-resort/2.jpg",
+      "https://example.com/tours/garden-resort/3.jpg"
+    ],
+    "summary": "Experience the ultimate luxury at Garden Resort & Spa in Punta Cana. Enjoy pristine beaches, world-class amenities, and all-inclusive packages in this tropical paradise. Perfect for couples and families seeking relaxation and adventure.",
+    "freeCancelationDaysBefore": 10,
+    "durations": ["7 days", "10 days", "12 days"],
+    "accommodation": "Luxurious 5-star resort rooms with ocean views and direct beach access. All rooms feature private balconies, king-size beds, premium amenities, butler service, and complimentary mini-bar. Junior suites available with hot tubs.",
+    "hotelName": "Garden Resort & Spa",
+    "hotelDescription": "A stunning beachfront property featuring 5 outdoor pools (including adults-only infinity pool), multiple gourmet restaurants, a world-renowned 20,000 sqm spa, and nightly entertainment on the shores of Punta Cana. All-inclusive with premium beverages.",
+    "mealPlans": ["BB", "HB", "FB", "AI"],
+    "customDetails": {
+      "Pool": "5 outdoor pools including adults-only infinity pool with swim-up bar",
+      "Beach": "Private beach with water sports including kayaking, snorkeling, and windsurfing",
+      "Entertainment": "Nightly shows, live music, casino, and nightclub",
+      "Spa": "Full-service spa with 30+ treatment options and wellness center",
+      "Dining": "6 specialty restaurants - Italian, Japanese, French, Caribbean, Steakhouse, Mediterranean",
+      "Activities": "Tennis, volleyball, basketball, fitness center, yoga classes",
+      "Kids": "Kids club with activities for ages 3-12, babysitting service available"
+    },
+    "startDates": ["2025-01-04","2025-01-11","2025-01-18","2025-01-25","2025-02-01"],
+    "guestQuantity": {"adultsMaxValue": 4, "childrenMaxValue": 3, "totalMaxValue": 6},
+    "price": {"7 days": "$1400", "10 days": "$1900", "12 days": "$2200"},
+    "mealSupplementsPerDay": {"BB": "$0", "HB": "$30", "FB": "$50", "AI": "$80"}
+  },
+  {
+    "id": "t-002",
+    "name": "Dolomites: 7-day guided hike",
+    "destination": "Dolomites Mountains, Italy",
+    "tourType": "HIKE",
+    "rating": 4.73,
+    "reviewCount": 15,
+    "imageUrls": [
+      "https://example.com/tours/dolomites/1.jpg",
+      "https://example.com/tours/dolomites/2.jpg"
+    ],
+    "summary": "Experience the excitement of 7 days among the wonders of the Brenta Dolomites! Unforgettable excursions, breathtaking views, 7 days of adventure in a paradise.",
+    "freeCancelationDaysBefore": 10,
+    "durations": ["7 days"],
+    "accommodation": "During your hike in Dolomites, you will be accommodated in mountain huts. The tour package includes stays in shared dormitory-style rooms.",
+    "hotelName": null,
+    "hotelDescription": null,
+    "mealPlans": ["BB", "HB", "FB"],
+    "customDetails": {
+      "Tourguide": "English, Italian",
+      "Transfer": "Organized transfer from Milan airport.",
+      "Small group": "Maximum number of participants: 8",
+      "Difficulty": "Moderate to challenging"
+    },
+    "startDates": ["2025-01-15","2025-01-22","2025-01-29","2025-02-05"],
+    "guestQuantity": {"adultsMaxValue": 8, "childrenMaxValue": 0, "totalMaxValue": 8},
+    "price": {"7 days": "$1400"},
+    "mealSupplementsPerDay": {"BB": "$0", "HB": "$25", "FB": "$40"}
+  },
+  {
+    "id": "t-003",
+    "name": "Caribbean Dream Cruise",
+    "destination": "Caribbean Sea",
+    "tourType": "CRUISE",
+    "rating": 4.5,
+    "reviewCount": 32,
+    "imageUrls": [
+      "https://example.com/tours/caribbean-cruise/1.jpg",
+      "https://example.com/tours/caribbean-cruise/2.jpg",
+      "https://example.com/tours/caribbean-cruise/3.jpg"
+    ],
+    "summary": "Sail the turquoise Caribbean waters visiting multiple islands. Experience luxury at sea with stops in Jamaica, Grand Cayman, and Cozumel, Mexico.",
+    "freeCancelationDaysBefore": 14,
+    "durations": ["7 days", "10 days"],
+    "accommodation": "Modern cabin on a luxury cruise ship. Options range from interior cabin to ocean-view suite with private balcony.",
+    "hotelName": "MS Caribbean Star",
+    "hotelDescription": "A state-of-the-art cruise ship with 15 decks, multiple restaurants, pools, spa, casino, and entertainment venues. Capacity for 3,500 guests.",
+    "mealPlans": ["FB", "AI"],
+    "customDetails": {
+      "Port stops": "Jamaica, Grand Cayman, Cozumel",
+      "Onboard activities": "Spa, casino, theater, climbing wall",
+      "Departure port": "Miami, Florida",
+      "Dress code": "Smart casual for dining rooms"
+    },
+    "startDates": ["2025-01-10","2025-01-17","2025-01-24","2025-02-07"],
+    "guestQuantity": {"adultsMaxValue": 4, "childrenMaxValue": 2, "totalMaxValue": 4},
+    "price": {"7 days": "$2100", "10 days": "$2900"},
+    "mealSupplementsPerDay": {"FB": "$0", "AI": "$45"}
+  },
+  {
+    "id": "t-004",
+    "name": "Tropical Caribe Hotel",
+    "destination": "Barahona, Dominican Republic",
+    "tourType": "RESORT",
+    "rating": 4.2,
+    "reviewCount": 28,
+    "imageUrls": [
+      "https://example.com/tours/tropical-caribe/1.jpg",
+      "https://example.com/tours/tropical-caribe/2.jpg"
+    ],
+    "summary": "A hidden gem on the untouched shores of Barahona. Experience authentic Dominican culture with modern comforts in this intimate boutique resort.",
+    "freeCancelationDaysBefore": 7,
+    "durations": ["7 days", "10 days"],
+    "accommodation": "Boutique rooms and bungalows with garden or sea views. All rooms include air conditioning, WiFi, and private bathroom.",
+    "hotelName": "Tropical Caribe Hotel",
+    "hotelDescription": "An intimate boutique hotel with 45 rooms nestled between the mountains and the Caribbean Sea. Features a restaurant, bar, and private beach area.",
+    "mealPlans": ["BB", "HB", "AI"],
+    "customDetails": {
+      "Local excursions": "Whale watching, Laguna Oviedo, Los Patos beach",
+      "Beach": "Private beach access with loungers",
+      "Transport": "Airport shuttle from Santo Domingo included"
+    },
+    "startDates": ["2025-01-07","2025-01-14","2025-01-21","2025-01-28"],
+    "guestQuantity": {"adultsMaxValue": 3, "childrenMaxValue": 2, "totalMaxValue": 4},
+    "price": {"7 days": "$980", "10 days": "$1350"},
+    "mealSupplementsPerDay": {"BB": "$0", "HB": "$20", "AI": "$60"}
+  },
+  {
+    "id": "t-005",
+    "name": "Machu Picchu Trek - Legendary Journey",
+    "destination": "Cusco, Peru",
+    "tourType": "HIKE",
+    "rating": 4.8,
+    "reviewCount": 45,
+    "imageUrls": [
+      "https://example.com/tours/machu-picchu/1.jpg",
+      "https://example.com/tours/machu-picchu/2.jpg",
+      "https://example.com/tours/machu-picchu/3.jpg"
+    ],
+    "summary": "Trek through the legendary Inca Trail and discover the ancient citadel of Machu Picchu. A journey through breathtaking Andean landscapes, cloud forests, and Inca ruins with expert historical guides.",
+    "freeCancelationDaysBefore": 14,
+    "durations": ["5 days", "7 days"],
+    "accommodation": "Combination of 3-season camping tents along the Inca Trail and a 4-star hotel in Aguas Calientes. All camping equipment provided including sleeping bags and sleeping pads. Hot meals at camp.",
+    "hotelName": null,
+    "hotelDescription": null,
+    "mealPlans": ["BB", "HB"],
+    "customDetails": {
+      "Tourguide": "Expert guides fluent in English and Spanish with historical specialization",
+      "Permits": "Inca Trail permits and Machu Picchu entry included",
+      "Porters": "Professional porters carry camp equipment (personal bags max 5kg extra charge)",
+      "Altitude": "Up to 4,215m - 2-day acclimatization in Cusco included",
+      "Group size": "Small groups (max 12) for intimate experience",
+      "Transportation": "Round-trip train from Aguas Calientes to Machu Picchu",
+      "Fitness": "Moderate to challenging fitness level required",
+      "Highlights": "Dead Woman's Pass, Runkurakay ruins, Sun Gate sunrise at Machu Picchu"
+    },
+    "startDates": ["2025-01-12","2025-01-19","2025-01-26","2025-02-09"],
+    "guestQuantity": {"adultsMaxValue": 12, "childrenMaxValue": 0, "totalMaxValue": 12},
+    "price": {"5 days": "$1100", "7 days": "$1500"},
+    "mealSupplementsPerDay": {"BB": "$0", "HB": "$20"}
+  },
+  {
+    "id": "t-006",
+    "name": "Mediterranean Cruise Experience",
+    "destination": "Mediterranean Sea",
+    "tourType": "CRUISE",
+    "rating": 4.6,
+    "reviewCount": 21,
+    "imageUrls": [
+      "https://example.com/tours/mediterranean/1.jpg",
+      "https://example.com/tours/mediterranean/2.jpg"
+    ],
+    "summary": "Sail the historic Mediterranean visiting Rome, Athens, Santorini, and Barcelona. A perfect blend of ancient history, stunning architecture, and vibrant Mediterranean culture.",
+    "freeCancelationDaysBefore": 14,
+    "durations": ["7 days", "14 days"],
+    "accommodation": "Elegant staterooms on a premium cruise liner. Ocean-view and balcony options available.",
+    "hotelName": "MS Adriatic Pearl",
+    "hotelDescription": "A premium mid-size cruise ship with 12 decks, 4 restaurants, 3 pools, spa, and enrichment programs including history lectures by expert guides.",
+    "mealPlans": ["HB", "FB", "AI"],
+    "customDetails": {
+      "Port stops": "Rome, Athens, Santorini, Barcelona, Monaco",
+      "Shore excursions": "Optional guided tours at each port",
+      "Departure port": "Barcelona, Spain",
+      "Onboard experts": "History and culture lecturers"
+    },
+    "startDates": ["2025-01-05","2025-01-19","2025-02-02","2025-02-16"],
+    "guestQuantity": {"adultsMaxValue": 4, "childrenMaxValue": 2, "totalMaxValue": 5},
+    "price": {"7 days": "$1800", "14 days": "$3400"},
+    "mealSupplementsPerDay": {"HB": "$0", "FB": "$35", "AI": "$70"}
+  }
+]

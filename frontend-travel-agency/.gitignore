@@ -1,0 +1,43 @@
+node_modules
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production build (generated — do not commit)
+/build
+
+# environment variables (never commit real secrets)
+.env
+.env.local
+.env.development
+.env.production
+.env.development.local
+.env.test.local
+.env.production.local
+
+# misc
+.DS_Store
+Thumbs.db
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor
+.vscode/
+.idea/
+
+# sprint / internal docs (not needed in repo)
+CHECKLIST.md
+EMPTYSTATE_README.md
+FINAL_STATUS.md
+IMPLEMENTATION_SUMMARY.md
+QUICK_START.md
+TAILWIND_FIX.md

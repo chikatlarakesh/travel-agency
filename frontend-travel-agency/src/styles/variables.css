@@ -1,0 +1,42 @@
+:root {
+  /* Colors */
+  --color-primary: #0077b6;
+  --color-secondary: #00b4d8;
+  --color-accent: #f77f00;
+  --color-text: #1a1a2e;
+  --color-text-light: #6c757d;
+  --color-bg: #ffffff;
+  --color-bg-light: #f8f9fa;
+
+  /* Agent Booking Colors */
+  --color-blue-05: #027EAC;
+  --color-blue-05-hover: #026a94;
+  --color-blue-09: #0B3857;
+  --color-grey-05: #D3E1ED;
+  --color-grey-07: #677883;
+  --color-blue-light: #E7F9FF;
+  --color-green: #118819;
+  --color-overlay: rgba(66, 66, 66, 0.5);
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+  --spacing-xl: 64px;
+
+  /* Typography */
+  --font-family-primary: 'Nunito', sans-serif;
+  --font-family-secondary: 'Poppins', sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 12px;
+}

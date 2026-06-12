@@ -1,0 +1,35 @@
+{
+  "tourId": "t-001",
+  "userId": "REPLACE_WITH_YOUR_USER_ID",
+  "tourInstanceId": "ti-001-dec01",
+  "mealPlan": "AI",
+  "adults": 2,
+  "children": 1,
+  "leadTraveler": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "+1-555-0123",
+    "dateOfBirth": "1985-06-15",
+    "passportNumber": "P12345678"
+  },
+  "additionalTravelers": [
+    {
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "jane.doe@example.com",
+      "phone": "+1-555-0124",
+      "dateOfBirth": "1987-08-20",
+      "passportNumber": "P87654321"
+    },
+    {
+      "firstName": "Jimmy",
+      "lastName": "Doe",
+      "email": "",
+      "phone": "",
+      "dateOfBirth": "2015-03-10",
+      "passportNumber": "P11223344"
+    }
+  ]
+}
+

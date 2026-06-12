@@ -1,0 +1,132 @@
+/* ========================================
+   Agent Bookings Page
+   ======================================== */
+
+/* ── Container ── */
+.bookings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 40px 40px;
+}
+
+/* ── Cards Grid ── */
+.bookings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  width: 100%;
+}
+
+/* ── Skeleton Loader ── */
+.bookings-card-skeleton {
+  height: 388px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  animation: pulseBooking 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseBooking {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ── Empty State ── */
+.bookings-empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 64px 24px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid #E8F0F5;
+  box-shadow: 0px 2px 10px 6px rgba(2, 126, 172, 0.2);
+  text-align: center;
+}
+
+.bookings-empty-title {
+  font-family: var(--font-family-primary, 'Nunito', sans-serif);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--color-blue-09, #0B3857);
+}
+
+.bookings-empty-subtitle {
+  font-family: var(--font-family-primary, 'Nunito', sans-serif);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--color-grey-07, #677883);
+}
+
+/* ── Pagination ── */
+.bookings-pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto;
+}
+
+.bookings-pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 28px;
+  padding-bottom: 4px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font-family: var(--font-family-secondary, 'Poppins', sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-blue-09, #0B3857);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.bookings-pagination__btn:hover {
+  color: var(--color-blue-05, #027EAC);
+}
+
+.bookings-pagination__btn:focus-visible {
+  outline: 2px solid var(--color-blue-05, #027EAC);
+  outline-offset: 2px;
+}
+
+.bookings-pagination__btn--active {
+  border-bottom-color: var(--color-blue-05, #027EAC);
+  color: var(--color-blue-05, #027EAC);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .bookings-container {
+    padding: 32px 24px;
+    gap: 24px;
+  }
+
+  .bookings-grid {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bookings-container {
+    padding: 24px 16px;
+    gap: 20px;
+  }
+
+  .bookings-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
